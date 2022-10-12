@@ -1,8 +1,7 @@
 package Model;
 
 import java.io.Serializable;
-
-abstract public class Foods implements Serializable {
+public class Foods implements Serializable {
     private static final long serialVersionUID = 1L;
     private String id;  // id cua san pham
     private String MFG; // nam san xuat
@@ -10,6 +9,7 @@ abstract public class Foods implements Serializable {
     private int quantity; // so luong
     private String madeBy; // xuat xu
     private double calo; // calo co trong 1 san pham
+
 
     public Foods() {
     }

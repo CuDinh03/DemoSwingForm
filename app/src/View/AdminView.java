@@ -3,6 +3,7 @@ package View;
 import Data.IOWriteAndRead;
 import Model.Admin;
 import Model.User;
+import Validate.ValidateUser;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -167,10 +168,10 @@ public class AdminView extends JDialog implements Serializable {
         if (user == null) {
             return;
         }
-        String name = JFname.getText();
+        String name = String.valueOf(ValidateUser.name(JFname.getText()));
         String gender = genderLabel.getText();
-        String mail = JFmail.getText();
-        String phone = JFphone.getText();
+        String mail = String.valueOf(ValidateUser.email(JFmail.getText()));
+        String phone = String.valueOf(ValidateUser.telephone(JFphone.getText()));
         String address = JFaddress.getText();
 
         if (name.isEmpty() || mail.isEmpty() || address.isEmpty() || phone.isEmpty() || gender.isEmpty()) {
@@ -186,7 +187,7 @@ public class AdminView extends JDialog implements Serializable {
                 list.get(i).setPhone(phone);
                 list.get(i).setGender(gender);
                 ioWriteAndRead.write(file, list);
-                JOptionPane.showMessageDialog(this, "Thay doi thanh cong!", "Done!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Thay đổi thành công!", "Done!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }

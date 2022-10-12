@@ -2,6 +2,7 @@ package View;
 
 import Data.IOWriteAndRead;
 import Model.User;
+import Validate.ValidateUser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,29 +17,30 @@ public class SignUp extends JDialog implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private JTextField FullNameJTextField;
-    private JTextField UserNameTextField;
+    public JTextField FullNameJTextField;
+    public JTextField UserNameTextField;
     private JLabel fullNameJLabel;
     private JLabel UserNameJLabel;
     private JLabel PasswordJLabel;
     private JLabel ConfirmPassJLabel;
     private JLabel ContactJLabel;
     private JLabel EmailJLabel;
-    private JPasswordField passwordJField;
-    private JPasswordField ConfirmpasswordJField;
-    private JTextField ContactJtextField;
-    private JTextField EmailJtextField;
+    public JPasswordField passwordJField;
+    public JPasswordField ConfirmpasswordJField;
+    public JTextField ContactJtextField;
+    public JTextField EmailJtextField;
     private JButton logInButton;
     private JLabel genderJLabel;
     private JRadioButton maleButton;
     private JRadioButton femaleButton;
     private JPanel ViewJPanel;
     private JButton cancelButton;
-    private JTextArea addressJTextArea;
+    public JTextArea addressJTextArea;
     private JLabel addressJLabel;
     File file = new File("Users.txt");
     IOWriteAndRead<User> ioWriteAndRead = new IOWriteAndRead<>();
     ArrayList<User> users = ioWriteAndRead.read(file);
+
 
     public SignUp(JFrame parent){
 
@@ -74,15 +76,16 @@ public class SignUp extends JDialog implements Serializable {
         setVisible(false);
     }
 
+
     public void loginUser(){
 
-            String name = FullNameJTextField.getText();
-            String account = UserNameTextField.getText();
-            String pass = String.valueOf(passwordJField.getPassword());
-            String phone = ContactJtextField.getText();
-            String email = EmailJtextField.getText();
+            String name = String.valueOf(ValidateUser.name(FullNameJTextField.getText()));
+            String account = String.valueOf(ValidateUser.username(UserNameTextField.getText()));
+            String pass = ValidateUser.password(String.valueOf(passwordJField.getPassword()));
+            String phone = ValidateUser.telephone(ContactJtextField.getText());
+            String email = ValidateUser.email(EmailJtextField.getText());
             String confirm = String.valueOf(ConfirmpasswordJField.getPassword());
-            String address = addressJTextArea.getText();
+            String address = String.valueOf(addressJTextArea.getText());
 
             int id =0;
             int i=0;
