@@ -9,16 +9,18 @@ public class Meat extends Foods implements Serializable {
     private final int pork = 198;
     private final int chicken = 155;
 
-    public Meat() {
+    public Meat(int id, String name, int mfg, String exp, int quantity, String made, int calo) {
+        super(id, name, mfg, exp, quantity, made, calo);
     }
 
-    public Meat(String name) {
-        this.name = name;
+    public Meat(int id, String name, int mfg, String exp, int quantity, String made, int calo, String name1) {
+        super(id, name, mfg, exp, quantity, made, calo);
+        this.name = name1;
     }
 
-    public Meat(String id, String MFG, String EXP, int quantity, String madeBy, double calo, String name) {
-        super(id, MFG, EXP, quantity, madeBy, calo);
-        this.name = name;
+    public Meat(int id, String name, int MFG, String EXP, int quantity, String madeBy, double calo, String name1) {
+        super(id, name, MFG, EXP, quantity, madeBy, calo);
+        this.name = name1;
     }
 
     public String getName() {

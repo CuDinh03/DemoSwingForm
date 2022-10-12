@@ -11,16 +11,15 @@ public class Starch extends Foods implements Serializable {
     private final int riceC = 357; // com cháy
     private final int riceT = 627; // com tấm
 
-    public Starch() {
+
+    public Starch(int id, String name, int mfg, String exp, int quantity, String made, int calo, String name1) {
+        super(id, name, mfg, exp, quantity, made, calo);
+        this.name = name1;
     }
 
-    public Starch(String name) {
-        this.name = name;
-    }
-
-    public Starch(String id, String MFG, String EXP, int quantity, String madeBy, double calo, String name) {
-        super(id, MFG, EXP, quantity, madeBy, calo);
-        this.name = name;
+    public Starch(int id, String name, int MFG, String EXP, int quantity, String madeBy, double calo, String name1) {
+        super(id, name, MFG, EXP, quantity, madeBy, calo);
+        this.name = name1;
     }
 
     public String getName() {

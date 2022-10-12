@@ -1,7 +1,6 @@
 package View;
 
 import Data.IOWriteAndRead;
-import Model.Admin;
 import Model.User;
 
 import javax.swing.*;

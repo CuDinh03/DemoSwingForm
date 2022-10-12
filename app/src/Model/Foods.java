@@ -3,18 +3,21 @@ package Model;
 import java.io.Serializable;
 public class Foods implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String id;  // id cua san pham
-    private String MFG; // nam san xuat
+
+
+    private int id;  // id cua san pham
+    private String name;
+    private int MFG; // nam san xuat
     private String EXP; // han su dung
     private int quantity; // so luong
     private String madeBy; // xuat xu
     private double calo; // calo co trong 1 san pham
 
-
     public Foods() {
     }
 
-    public Foods(String id, String MFG, String EXP, int quantity, String madeBy, double calo) {
+    public Foods(int id, String name, int MFG, String EXP, int quantity, String madeBy, double calo) {
+        this.name = name;
         this.id = id;
         this.MFG = MFG;
         this.EXP = EXP;
@@ -23,19 +26,21 @@ public class Foods implements Serializable {
         this.calo = calo;
     }
 
-    public String getId() {
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getMFG() {
+    public int getMFG() {
         return MFG;
     }
 
-    public void setMFG(String MFG) {
+    public void setMFG(int MFG) {
         this.MFG = MFG;
     }
 
@@ -70,4 +75,13 @@ public class Foods implements Serializable {
     public void setCalo(double calo) {
         this.calo = calo;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

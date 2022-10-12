@@ -69,11 +69,15 @@ public class AdminView extends JDialog implements Serializable {
         setMinimumSize(new Dimension(600, 700));
         setModal(true);
         setLocationRelativeTo(parent);
-//        jTable.setModel(new DefaultTableModel((Object[][]) data, columnNames));
+        jTable.setModel(new DefaultTableModel((Object[][]) data, columnNames));
 
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
+                Menu menu = new Menu(null);
+                menu.setVisible(true);
+
 
             }
         });
@@ -234,7 +238,7 @@ public class AdminView extends JDialog implements Serializable {
                 i++;
             }
         }
-        public void show2 (User u){
+        private void show2 (User u){
         if (u==null){
             return;
         }

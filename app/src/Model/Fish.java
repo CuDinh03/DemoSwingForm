@@ -12,12 +12,14 @@ public class Fish extends Foods implements Serializable {
     private final int crabAl = 84; // cua alaska
     private final int shrimp = 100; // tom
 
-    public Fish(String name) {
-
-        this.name = name;
+    public Fish(int id, String name, int mfg, String exp, int quantity, String made, int calo, String name1) {
+        super(id, name, mfg, exp, quantity, made, calo);
+        this.name = name1;
     }
 
-    public Fish() {
+    public Fish(int id, String name, int MFG, String EXP, int quantity, String madeBy, double calo, String name1) {
+        super(id, name, MFG, EXP, quantity, madeBy, calo);
+        this.name = name1;
     }
 
     public String getName() {
