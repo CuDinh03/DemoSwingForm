@@ -190,7 +190,7 @@ public class AdminView extends JDialog implements Serializable {
                 list.get(i).setAddress(address);
                 list.get(i).setPhone(phone);
                 list.get(i).setGender(gender);
-                ioWriteAndRead.write(file, list);
+                ioWriteAndRead.write(file,list);
                 JOptionPane.showMessageDialog(this, "Thay đổi thành công!", "Done!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
