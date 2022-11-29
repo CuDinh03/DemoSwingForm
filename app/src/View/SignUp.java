@@ -80,10 +80,10 @@ public class SignUp extends JDialog implements Serializable {
     public void loginUser(){
 
             String name = String.valueOf(ValidateUser.name(FullNameJTextField.getText()));
-            String account = String.valueOf(ValidateUser.username(UserNameTextField.getText()));
-            String pass = ValidateUser.password(String.valueOf(passwordJField.getPassword()));
-            String phone = ValidateUser.telephone(ContactJtextField.getText());
-            String email = ValidateUser.email(EmailJtextField.getText());
+            String account = String.valueOf(UserNameTextField.getText());
+            String pass = String.valueOf(ValidateUser.password(String.valueOf(passwordJField.getPassword())));
+            String phone = String.valueOf(ValidateUser.telephone(ContactJtextField.getText()));
+            String email = String.valueOf(ValidateUser.email(EmailJtextField.getText()));
             String confirm = String.valueOf(ConfirmpasswordJField.getPassword());
             String address = String.valueOf(addressJTextArea.getText());
 
@@ -92,7 +92,8 @@ public class SignUp extends JDialog implements Serializable {
             try {
                 while (i<users.size()){
                     if (id==users.get(i).getId()){
-                        id+=1;
+                        id=users.get(i).getId()+1;
+
                     }
                     i++;
                 }
@@ -111,6 +112,7 @@ public class SignUp extends JDialog implements Serializable {
             JOptionPane.showMessageDialog(this,"Mật khẩu không trùng nhau", " Try again",JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         JOptionPane.showMessageDialog(this, "Đã đăng ký thành công","Cảm ơn",JOptionPane.ERROR_MESSAGE);
         User user = new User(id,name, account,pass, gender, email,phone,address);
         users.add(user);

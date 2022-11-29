@@ -76,15 +76,21 @@ public class Out extends JDialog implements Serializable {
         nameJTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
+               if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                   Foods f = findf();
+                   show2(f);
+               }
             }
         });
         quantityJTF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
+                if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                    quantiTy(index1());
+                }
             }
         });
+
     }
 
     public Foods findf() {
@@ -101,17 +107,6 @@ public class Out extends JDialog implements Serializable {
         return null;
     }
 
-//    public boolean check1() {
-//        int i = 0;
-//        while (i < list.size()) {
-//            if (nameJTF.getText().equals(list.get(i).getName())) {
-//                return false;
-//            }
-//            i++;
-//        }
-//        return true;
-//    }
-
     public void show2(Foods f) {
         if (f == null) {
             return;
@@ -122,28 +117,53 @@ public class Out extends JDialog implements Serializable {
     }
 
     public void quantiTy(int i) {
-        int number = Integer.parseInt(String.valueOf(quantity.getText()));
-        int number2 = Integer.parseInt(String.valueOf(quantityJTF.getText()));
+        if (nameJTF.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Không để rỗng tên tìm kiếm","Thông báo",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int sum = 0;
 
-        if (downbtn.isBorderPaintedFlat()) {
-            sum = number - number2;
-            list.get(i).setQuantity(sum);
-            ioWriteAndRead.write(file, list);
-            JOptionPane.showMessageDialog(this,"Nhập kho thành công","Thông báo",JOptionPane.ERROR_MESSAGE);
+        int number = Integer.parseInt(String.valueOf(quantity.getText()));
 
-            quantity.setText(String.valueOf(list.get(i).getQuantity()));
+        int number2 =0;
+            try {
+                number2 = Integer.parseInt(String.valueOf(quantityJTF.getText()));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
 
-        } else if (upbtn.isBorderPaintedFlat()) {
-            sum = number + number2;
-            list.get(i).setQuantity(sum);
-            ioWriteAndRead.write(file, list);
-            JOptionPane.showMessageDialog(this,"Xuất kho thành công","Thông báo",JOptionPane.ERROR_MESSAGE);
-            quantity.setText(String.valueOf(list.get(i).getQuantity()));
+        if (quantityJTF.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }else {
+            if (downbtn.isSelected()) {
+                sum = number - number2;
+                if (sum<0){
+                    return;
+                }
+                list.get(i).setQuantity(sum);
+                ioWriteAndRead.write(file, list);
+                JOptionPane.showMessageDialog(this,"Xuất kho thành công","Thông báo",JOptionPane.ERROR_MESSAGE);
+                quantity.setText(String.valueOf(list.get(i).getQuantity()));
 
-        }else{
-            JOptionPane.showMessageDialog(this,"Hãy tích vào nhập hoặc xuất","Thông báo",JOptionPane.ERROR_MESSAGE);
+            } else if (upbtn.isSelected()) {
+                sum = number + number2;
+                if (sum<0){
+                    return;
+                }
+                list.get(i).setQuantity(sum);
+                ioWriteAndRead.write(file, list);
+                JOptionPane.showMessageDialog(this,"Nhập kho thành công","Thông báo",JOptionPane.ERROR_MESSAGE);
+                quantity.setText(String.valueOf(list.get(i).getQuantity()));
+
+            }else{
+                JOptionPane.showMessageDialog(this,"Hãy tích vào nhập hoặc xuất","Thông báo",JOptionPane.ERROR_MESSAGE);
+            }
+
         }
+
+
 
     }
 
@@ -153,8 +173,9 @@ public class Out extends JDialog implements Serializable {
         int i = 0;
         while (i < list.size()) {
             if (id1 == list.get(i).getId()) {
-return i;
+                    return i;
             }
+            i++;
         }
         return 0;
     }

@@ -2,10 +2,13 @@ package View;
 
 import Data.IOWriteAndRead;
 import Model.Foods;
+import Validate.ValidateUser;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -45,7 +48,7 @@ public class Menu extends JDialog implements Serializable {
     IOWriteAndRead ioWriteAndRead = new IOWriteAndRead();
     ArrayList<Foods> foods = ioWriteAndRead.read(file);
 
-    private String[] columnName = new String[]{
+    private final String[] columnName = new String[]{
             "ID","Tên sản phẩm","Năm sản xuất","Hạn sử dụng","Số lượng","Xuất xứ","Calo"
     };
     private Foods obfoods = new Foods();
@@ -59,13 +62,15 @@ public class Menu extends JDialog implements Serializable {
         setModal(true);
         setLocationRelativeTo(parent);
 
-
         menuTable.setModel(new DefaultTableModel((Object[][]) data,columnName));
-        findJbt.addActionListener(e -> {
+        findJbt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 Foods f = find();
                 show2(f);
+            }
         });
-        findJbt.addKeyListener(new KeyAdapter() {
+        findProductJF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode()==KeyEvent.VK_ENTER){
@@ -82,8 +87,11 @@ public class Menu extends JDialog implements Serializable {
                 }
         });
         changeBtn.addActionListener(e -> {
-                Foods f = find();
-                setChangeBtn(f);
+
+            Foods f = find();
+            setChangeBtn(f);
+
+
         });
         showBtn.addActionListener(e -> showDataProducts());
         deleteBtn.addActionListener(e ->  {
@@ -119,7 +127,7 @@ public class Menu extends JDialog implements Serializable {
         try {
             while (i<foods.size()){
                 if (id == foods.get(i).getId()){
-                    id+=1;
+                    id=foods.get(i).getId()+1;
                 }
                 i++;
             }
@@ -196,34 +204,21 @@ public class Menu extends JDialog implements Serializable {
             return;
         }
 
-        String name = String.valueOf(nameProductJTF.getText());
-        int mfg = 0;
-        try {
-            mfg = Integer.parseInt(String.valueOf(mfgJTF.getText()));
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this,"Lỗi định dạng năm","Thử lại",JOptionPane.ERROR_MESSAGE);
-        }
-
+        int mfg = Integer.parseInt(String.valueOf(mfgJTF.getText()));
         String exp = String.valueOf(expJTF.getText());
         String made = String.valueOf(madeJFT.getText());
-        double calo=0;
-        try{
-            calo = Double.parseDouble(String.valueOf(caloJFT.getText()));
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this,"Lỗi định dạng số lượng calo","Thử lại",JOptionPane.ERROR_MESSAGE);
-        }
-        if (name.isEmpty()||mfg==0||exp.isEmpty()||calo==0||made.isEmpty()){
+        double calo = Double.parseDouble(String.valueOf(caloJFT.getText()));
+
+        if (mfg==0||exp.isEmpty()||calo==0||made.isEmpty()){
             JOptionPane.showMessageDialog(this,"Không được để trống thông tin","Thử lại",JOptionPane.ERROR_MESSAGE);
 
         }
         for (int i = 0; i < foods.size() ; i++) {
-            if (foods.get(i).getId()==food1.getId()){
-                foods.get(i).setName(name);
+            if (foods.get(i).getId()== food1.getId()){
+
                 foods.get(i).setMFG(Integer.parseInt(String.valueOf(mfg)));
                 foods.get(i).setEXP(exp);
-                foods.get(i).setName(made);
+                foods.get(i).setMadeBy(made);
                 foods.get(i).setCalo(Double.parseDouble(String.valueOf(calo)));
                 ioWriteAndRead.write(file,foods);
                 JOptionPane.showMessageDialog(this,"Thay đổi thành công","Done",JOptionPane.ERROR_MESSAGE);
@@ -234,15 +229,22 @@ public class Menu extends JDialog implements Serializable {
     }
 
     public Foods find(){
-        String name = findProductJF.getText();
-        int i =0;
-        while (i< foods.size()){
-            if (Objects.equals(name, foods.get(i).getName() )&& name != null ){
-                obfoods = foods.get(i);
-                return foods.get(i);
-            }
-            i++;
+        int id=-1;
+        try {
+            id = Integer.parseInt(findProductJF.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"Nhập id dữ liệu số","Thông báo",JOptionPane.ERROR_MESSAGE);
         }
+
+            int i = 0;
+            while (i < foods.size()) {
+                if (id==foods.get(i).getId()) {
+                    obfoods = foods.get(i);
+                    return foods.get(i);
+                }
+                i++;
+            }
+
         JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm", "Thông báo", JOptionPane.ERROR_MESSAGE);
         return null;
     }
@@ -273,8 +275,6 @@ public class Menu extends JDialog implements Serializable {
         madeJFT.setText(String.valueOf(f.getMadeBy()));
         caloJFT.setText(String.valueOf(f.getCalo()));
     }
-
-
 
 
 }
